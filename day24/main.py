@@ -1,6 +1,7 @@
 with open(file="Input/Names/invited_names.txt") as file:
     # names = file.read().split("\n")
     names = file.readlines()
+    str().
 
 with open(file="Input/Letters/starting_letter.txt") as file:
     text = file.read()
