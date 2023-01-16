@@ -17,6 +17,7 @@ while score != 50:
     answer_state = screen.textinput(title=f"{score}/50 States Correct",
                                     prompt="What's another state's name?").title()
     if answer_state == "Exit":
+        data.to_csv("states_to_learn.csv")
         break
     if answer_state in states:
         score += 1
@@ -26,4 +27,3 @@ while score != 50:
         data = data.drop([correct_answer_data.index.item()])
         print(data)
 
-data.to_csv("states_to_learn.csv")
