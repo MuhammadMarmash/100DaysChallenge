@@ -8,9 +8,9 @@ class Snake:
     def __init__(self, screen):
         self.screen = screen
         self.segments = []
-        self.create_snake()
+        for _ in range(3):
+            self.create_snake()
         self.head = self.segments[0]
-        self.food_place = None
 
     def create_snake(self):
         self.segments.append(turtle.Turtle("square"))
@@ -48,3 +48,11 @@ class Snake:
         for i in range(1, len(self.segments)):
             self.segments[-i].goto(self.segments[-i - 1].position())
         self.head.fd(20)
+
+    def reset(self):
+        for seg in self.segments:
+            seg.goto(1000, 1000)
+        self.segments.clear()
+        for _ in range(3):
+            self.create_snake()
+        self.head = self.segments[0]
