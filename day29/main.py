@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
-import pyperclip
+# import pyperclip
+import json
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -23,7 +24,7 @@ def generate_password():
     password = "".join(password_list)
     password_entry.delete(0, END)
     password_entry.insert(END, password)
-    pyperclip.copy(password)
+    # pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -38,10 +39,37 @@ def save():
                                                               f"\nEmail: {email} "
                                                               f"\npassword: {password} \nIs it ok to save?")
         if is_ok:
-            with open(file="data.txt", mode="a") as file:
-                file.write(f"{website} | {email} | {password}\n")
-                website_entry.delete(0, END)
-                password_entry.delete(0, END)
+            new_data = {website: {
+                "email": email,
+                "password": password
+            }}
+            try:
+                with open(file="data.json", mode="r") as file:
+                    data = json.load(file)
+                    data.update(new_data)
+            except FileNotFoundError:
+                data = new_data
+            finally:
+                with open(file="data.json", mode="w") as file:
+                    json.dump(data, file, indent=4)
+                    website_entry.delete(0, END)
+                    password_entry.delete(0, END)
+
+
+def search():
+    website_to_search = website_entry.get()
+
+    try:
+        with open(file="data.json", mode="r") as file:
+            data = json.load(file)
+            the_final_data = data[website_to_search.strip()]
+            messagebox.showinfo(title=website_to_search, message=f"Email:{the_final_data['email']}\n"
+                                                                 f" Password: {the_final_data['password']}")
+    except KeyError:
+        messagebox.showerror(title="Oops", message="You don't have any passwords saved for this website")
+
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="No Data File Found.")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -60,7 +88,7 @@ Label(text="Email/Username:").grid(row=2, column=0)
 Label(text="password:").grid(row=3, column=0)
 
 website_entry = Entry()
-website_entry.grid(row=1, column=1, columnspan=2, sticky="nsew")
+website_entry.grid(row=1, column=1, sticky="nsew")
 website_entry.focus()
 email_entry = Entry()
 email_entry.grid(row=2, column=1, columnspan=2, sticky="nsew")
@@ -72,4 +100,6 @@ generate_button = Button(text="Generate Password", command=generate_password)
 generate_button.grid(row=3, column=2, sticky="nsew")
 add_button = Button(text="Add", command=save)
 add_button.grid(row=4, column=1, columnspan=2, sticky="nsew")
+search_button = Button(text="Search", command=search)
+search_button.grid(row=1, column=2, sticky="nsew")
 window.mainloop()
