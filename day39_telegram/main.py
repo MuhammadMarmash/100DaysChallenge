@@ -12,7 +12,7 @@ for flight in flights:
     if new_flight["price"] <= flight["lowestPrice"]:
         print(flight)
         notification_manager = NotificationManager()
-        notification_manager.send_telegram_message(f"LOW price alert! Only {new_flight['price']}₪"
+        notification_manager.send_telegram_message(f"LOW pice alert! Only {new_flight['price']}₪"
                                                    f" to fly from {new_flight['route'][0]['cityFrom']}"
                                                    f"-{new_flight['route'][0]['flyFrom']}"
                                                    f" to {new_flight['route'][0]['cityTo']}"
