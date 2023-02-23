@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../days54-70_WebDev/.idea/days54-70_flask.iml" filepath="$PROJECT_DIR$/../days54-70_WebDev/.idea/days54-70_flask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/days54-70_WebDev.iml" filepath="$PROJECT_DIR$/.idea/days54-70_WebDev.iml" />
     </modules>
   </component>
 </project>
