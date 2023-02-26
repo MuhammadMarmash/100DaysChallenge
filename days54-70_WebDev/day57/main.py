@@ -20,6 +20,5 @@ def the_blog(id):
             return render_template("post.html", blog=blog)
 
 
-
 if __name__ == "__main__":
     app.run(debug=True)
