@@ -1,5 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
+import sys
+
+sys.path.append("/home/muhammad/python/100DaysChallenge/days32-40_api/day39_telegram/")
+from notification_manager import NotificationManager
 
 app = Flask(__name__)
 
@@ -18,9 +22,20 @@ def about():
     return render_template("about.html")
 
 
-@app.route('/contact')
+@app.route('/contact', methods=["POST", "GET"])
 def contact():
-    return render_template("contact.html")
+    if request.method == "POST":
+        try:
+            if request.method == 'POST':
+                data = request.form
+                notificationmanager = NotificationManager()
+                notificationmanager.send_telegram_message(f'Message from {data["name"]}\n'
+                                                          f'Contacts: {data["email"]} {data["phone"]}\n'
+                                                          f'Content: {data["message"]}')
+                return render_template("contact.html", msg_sent=True)
+        except KeyError:
+            print("the hell??")
+    return render_template("contact.html", msg_sent=False)
 
 
 @app.route('/blog/<int:id>')
@@ -28,7 +43,6 @@ def the_blog(id):
     for blog in all_blogs:
         if blog["id"] == id:
             return render_template("post.html", blog=blog)
-
 
 
 if __name__ == "__main__":
