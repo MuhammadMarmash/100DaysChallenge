@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 
-sys.path.append("../day39_telegram/")
+sys.path.append("/home/muhammad/python/100DaysChallenge/days32-40_api/day39_telegram/")
 from notification_manager import NotificationManager
 
 url = "https://www.amazon.com/dp/B087H9ZVKD/ref=sbl_dpx_kitchen-electric-cookware_B0B7P646FD_0?th=1"
