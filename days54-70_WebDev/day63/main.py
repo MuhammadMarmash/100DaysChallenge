@@ -52,7 +52,6 @@ def edit():
         book_to_update = Book.query.get(book_id)
         book_to_update.rating = request.form["rating"]
         db.session.commit()
-        db.session.commit()
         return redirect(url_for('home'))
     book_id = request.args.get('id')
     book_selected = Book.query.get(book_id)
